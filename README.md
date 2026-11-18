@@ -1,26 +1,26 @@
-# Siftpress
+# Filtergeist
 
-**Siftpress** is an open-source editorial curation skill, CLI, and local configuration studio for turning RSS feeds, Exa web & podcast-transcript searches, Exa Agent research lenses, and optional Apify social/video streams into ranked, quote-verified research guides and RSS feeds.
+**Filtergeist** is an open-source editorial curation skill, CLI, and local configuration studio for turning RSS feeds, Exa web & podcast-transcript searches, Exa Agent research lenses, and optional Apify social/video streams into ranked, quote-verified research guides and RSS feeds.
 
-Zero third-party Python or Node packages are required: Siftpress runs on stock **Python 3.9+** (or `uv run`) using only the standard library.
+Zero third-party Python or Node packages are required: Filtergeist runs on stock **Python 3.9+** (or `uv run`) using only the standard library.
 
 ## Highlights
 
 - **Multi-channel discovery:** Parallel RSS/Atom & podcast polling (with automatic Exa domain fallback), Exa MCP (`Standard` search mode or `Deep` multi-lens `agent_run` mode), full podcast transcript search, and **opt-in Apify actors** (LinkedIn, X/Twitter, YouTube + transcripts, JS web) guarded by a hard per-run USD cap.
 - **Editorial anti-slop & scoring controls:** Verbatim quote substring verification, 5-axis scoring, **Publisher / Vendor Blog down-weighting & hard floors**, **Hype-Topic suppressors**, **Focus-Topic boosters**, **Cross-Issue Diversity & duplicate-idea memory**, and **Must-Include editorial pins**.
 - **Selectable output formats:** Toggle any combination of **Markdown Research Guide** (`issue_content.md`), **Text RSS 2.0 XML** (`feed.xml`), **Podcast RSS 2.0 + iTunes XML** (`podcast_feed.xml`), **Audit Review Markdown** (`review_content.md`), and **Structured Issue JSON** (`issue-YYYY-MM-DD.json`).
-- **Siftpress Studio Web GUI:** Built-in local web app (`127.0.0.1`) to configure streams, test RSS feeds live, edit rubrics and Exa Agent lenses, toggle output formats, and run **zero-cost What-If re-scoring** against saved builds.
+- **Filtergeist Studio Web GUI:** Built-in local web app (`127.0.0.1`) to configure streams, test RSS feeds live, edit rubrics and Exa Agent lenses, toggle output formats, and run **zero-cost What-If re-scoring** against saved builds.
 
 ---
 
 ## 60-Second Quickstart
 
-### Explore the Starter Config in Siftpress Studio
+### Explore the Starter Config in Filtergeist Studio
 
-Siftpress ships with an example stream (`streams/systems-and-craft.json` — *Systems & Craft Weekly*) preloaded with 8 live public engineering & podcast feeds so you can try everything right away with zero API keys:
+Filtergeist ships with an example stream (`streams/systems-and-craft.json` — *Systems & Craft Weekly*) preloaded with 8 live public engineering & podcast feeds so you can try everything right away with zero API keys:
 
 ```bash
-python3 scripts/siftpress.py studio --port 8765
+python3 scripts/filtergeist.py studio --port 8765
 ```
 
 Open <http://127.0.0.1:8765> to:
@@ -34,8 +34,8 @@ Open <http://127.0.0.1:8765> to:
    ```bash
    claude mcp add --transport http exa "https://mcp.exa.ai/mcp?tools=web_search_exa,web_search_advanced_exa,web_fetch_exa,agent_run&login"
    ```
-2. Load or symlink `SKILL.md` into your agent's skills directory (e.g. `~/.claude/skills/siftpress` or `~/.agents/skills/siftpress`), and ask:
-   > *"Use siftpress to curate a new build of `systems-and-craft` in deep mode."*
+2. Load or symlink `SKILL.md` into your agent's skills directory (e.g. `~/.claude/skills/filtergeist` or `~/.agents/skills/filtergeist`), and ask:
+   > *"Use filtergeist to curate a new build of `systems-and-craft` in deep mode."*
 
 ---
 
@@ -52,8 +52,8 @@ Maintain a weekly reading guide for a niche (a market, a technology, a regulator
 - **Then:** paste `## Items of Note` into your own newsletter or notes and write your own commentary on top.
 
 ```bash
-python3 scripts/siftpress.py --stream my-beat search-plan --mode deep > /tmp/plan.json
-python3 scripts/siftpress.py --stream my-beat render-guide --pool /tmp/pool.json --evaluated /tmp/evaluated.json
+python3 scripts/filtergeist.py --stream my-beat search-plan --mode deep > /tmp/plan.json
+python3 scripts/filtergeist.py --stream my-beat render-guide --pool /tmp/pool.json --evaluated /tmp/evaluated.json
 ```
 
 ### 2. A reading feed in your RSS reader (Feedbin, NetNewsWire, Reeder)
@@ -68,7 +68,7 @@ Subscribe to the *curated* result instead of 40 noisy sources, with scoring alre
 
 Turn podcast-transcript search plus audio picks from your feeds into a subscribable podcast feed.
 
-- **Configure:** enable `podcast_xml` and keep `resolve_enclosures: true` so Siftpress resolves real `.mp3`/`.m4a` URLs into `<enclosure>` tags.
+- **Configure:** enable `podcast_xml` and keep `resolve_enclosures: true` so Filtergeist resolves real `.mp3`/`.m4a` URLs into `<enclosure>` tags.
 - **Consume:** add `out/<stream>/podcast_feed.xml` to Apple Podcasts, Overcast, or Pocket Casts.
 - **Note:** video-only items are skipped from this feed automatically, since podcast apps require playable audio enclosures. They still appear in the Markdown guide and text feed.
 
@@ -88,7 +88,7 @@ Track a small set of X handles, LinkedIn profiles or topic searches, and YouTube
 - **Run:**
   ```bash
   export APIFY_TOKEN="apify_api_..."
-  python3 scripts/siftpress.py --stream my-beat poll-apify --out /tmp/apify.json
+  python3 scripts/filtergeist.py --stream my-beat poll-apify --out /tmp/apify.json
   ```
 - **Team without an Apify key:** use `--emit-mcp-plan` and let your coding agent execute the same actors through the Apify MCP server. X/Twitter posts are held to `min_words_shortform` (default 35 words) rather than the article word floor, so a genuinely short post is still judged on its content.
 
@@ -107,7 +107,7 @@ Calibrate the rubric against real material before committing to provider spend.
 - **Effect:** every candidate is re-scored locally with a visible before/after delta and a per-item score breakdown (`base`, recency, focus, publisher, hype). No network calls, no LLM calls, no cost.
 - **Then:** apply the same settings to a real build:
   ```bash
-  python3 scripts/siftpress.py --stream my-beat what-if
+  python3 scripts/filtergeist.py --stream my-beat what-if
   ```
 
 ### 8. Guaranteeing a pick that discovery would miss
@@ -116,7 +116,7 @@ Coverage-driven briefs (funding rounds, policy filings, vendor launches) where a
 
 - **Configure:** pin it for a build date, in the Studio (Tab 7) or from the CLI:
   ```bash
-  python3 scripts/siftpress.py --stream my-beat add-url "https://example.com/post" \
+  python3 scripts/filtergeist.py --stream my-beat add-url "https://example.com/post" \
     --cycle 2026-11-18 --category strategy --note "Lead pick this week"
   ```
 - **Effect:** pinned URLs bypass length floors, vendor and hype gates, and shortlist caps, and are marked in the guide as `Editorial pin: must-include`. Pins are inert once their cycle date passes.
@@ -134,31 +134,31 @@ For a reader who wants fewer items: use `capped_shortlist` mode with a small `to
 
 ```bash
 # List configured streams
-python3 scripts/siftpress.py streams
+python3 scripts/filtergeist.py streams
 
 # Poll curated RSS/Atom & podcast feeds
-python3 scripts/siftpress.py --stream systems-and-craft poll-feeds --out /tmp/rss.json
+python3 scripts/filtergeist.py --stream systems-and-craft poll-feeds --out /tmp/rss.json
 
 # Optional: poll enabled Apify actors (requires apify.enabled=true and APIFY_TOKEN, or --emit-mcp-plan)
-python3 scripts/siftpress.py --stream systems-and-craft poll-apify --out /tmp/apify.json
+python3 scripts/filtergeist.py --stream systems-and-craft poll-apify --out /tmp/apify.json
 
 # Print interpolated Exa MCP search + Agent lens plan
-python3 scripts/siftpress.py --stream systems-and-craft search-plan --mode deep
+python3 scripts/filtergeist.py --stream systems-and-craft search-plan --mode deep
 
 # Pin a must-include URL for an issue cycle
-python3 scripts/siftpress.py --stream systems-and-craft add-url "https://jvns.ca/..." --note "Lead pick"
+python3 scripts/filtergeist.py --stream systems-and-craft add-url "https://jvns.ca/..." --note "Lead pick"
 
 # Canonicalize, deduplicate, banlist, hydrate, and prefilter
-python3 scripts/siftpress.py --stream systems-and-craft prepare-pool --rss /tmp/rss.json --exa /tmp/exa.json --pool-out /tmp/pool.json
+python3 scripts/filtergeist.py --stream systems-and-craft prepare-pool --rss /tmp/rss.json --exa /tmp/exa.json --pool-out /tmp/pool.json
 
 # Verify verbatim quotes, check HTTP status codes, score, and render configured outputs
-python3 scripts/siftpress.py --stream systems-and-craft render-guide --pool /tmp/pool.json --evaluated /tmp/evaluated.json
+python3 scripts/filtergeist.py --stream systems-and-craft render-guide --pool /tmp/pool.json --evaluated /tmp/evaluated.json
 
 # Re-score an existing build instantly after editing scoring rules (zero network/LLM spend)
-python3 scripts/siftpress.py --stream systems-and-craft what-if
+python3 scripts/filtergeist.py --stream systems-and-craft what-if
 
 # Run built-in end-to-end invariant checks
-python3 scripts/siftpress.py selfcheck
+python3 scripts/filtergeist.py selfcheck
 ```
 
 ---
@@ -167,14 +167,14 @@ python3 scripts/siftpress.py selfcheck
 
 1. **Deterministic self-check & lint:**
    ```bash
-   python3 scripts/siftpress.py selfcheck
+   python3 scripts/filtergeist.py selfcheck
    uvx ruff check .
    ```
    *Expected:* `selfcheck ok` and `All checks passed!` (verifying URL canonicalization, Apify opt-out guard, must-include pin survival, verbatim quote stripping, vendor & hype hard gates, valid `feed.xml` + `podcast_feed.xml` XML parsing, `what-if` re-scoring, and repeat-scrape novelty banlists).
 2. **Studio GUI end-to-end check:**
-   - Launch: `python3 scripts/siftpress.py studio --port 8765` (wait for `Siftpress Studio listening on http://127.0.0.1:8765`).
+   - Launch: `python3 scripts/filtergeist.py studio --port 8765` (wait for `Filtergeist Studio listening on http://127.0.0.1:8765`).
    - Open `http://127.0.0.1:8765`, toggle output formats, run **Poll Enabled Feeds Live**, click **Load Sample Cycle** + **Run What-If** in Tab 7, and inspect `issue_content.md`, `feed.xml`, and `podcast_feed.xml` in Tab 8.
-   - Cleanup: terminate the owned `siftpress.py studio` server process and remove temporary `out/` test artifacts before committing.
+   - Cleanup: terminate the owned `filtergeist.py studio` server process and remove temporary `out/` test artifacts before committing.
 
 ## License
 

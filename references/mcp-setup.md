@@ -55,20 +55,20 @@ codex mcp add exa --url "https://mcp.exa.ai/mcp?tools=web_search_exa,web_search_
 
 ## 2. Optional Apify Integration (LinkedIn, X, YouTube, JS Web)
 
-Apify is **off by default** (`apify.enabled: false`). Passing `--noapify` or setting `SIFTPRESS_NOAPIFY=1` blocks all Apify execution regardless of stream config.
+Apify is **off by default** (`apify.enabled: false`). Passing `--noapify` or setting `FILTERGEIST_NOAPIFY=1` blocks all Apify execution regardless of stream config.
 
-When enabled for a stream, Siftpress supports two execution paths:
+When enabled for a stream, Filtergeist supports two execution paths:
 
 1. **Direct REST execution via `APIFY_TOKEN`:**
    ```bash
    export APIFY_TOKEN="apify_api_..."
-   python3 scripts/siftpress.py --stream <slug> poll-apify --out /tmp/apify_raw.json
+   python3 scripts/filtergeist.py --stream <slug> poll-apify --out /tmp/apify_raw.json
    ```
    Enforces `apify.max_usd_per_run` by tracking cumulative actor `usageTotalUsd` and stopping before launching subsequent actors if the cap is reached.
 
 2. **Apify Official MCP Server (`https://mcp.apify.com`):**
    ```bash
    claude mcp add --transport http apify "https://mcp.apify.com" --header "Authorization: Bearer ${APIFY_TOKEN}"
-   python3 scripts/siftpress.py --stream <slug> poll-apify --emit-mcp-plan --out /tmp/apify_plan.json
+   python3 scripts/filtergeist.py --stream <slug> poll-apify --emit-mcp-plan --out /tmp/apify_plan.json
    ```
    Your coding agent reads `mcp_calls` from `/tmp/apify_plan.json` and invokes the listed Apify actors through MCP.

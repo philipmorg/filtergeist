@@ -318,7 +318,7 @@ def poll_apify(
     noapify: bool = False,
 ) -> dict[str, Any]:
     ap_cfg = cfg.get("apify") or {}
-    env_block = os.environ.get("SIFTPRESS_NOAPIFY", "").strip() == "1" or os.environ.get("NOAPIFY", "").strip() == "1"
+    env_block = os.environ.get("FILTERGEIST_NOAPIFY", "").strip() == "1" or os.environ.get("NOAPIFY", "").strip() == "1"
     if noapify or env_block or not ap_cfg.get("enabled", False):
         return {"enabled": False, "skipped_reason": "disabled_or_noapify", "candidates": [], "spent_usd": 0.0, "mcp_calls": []}
 

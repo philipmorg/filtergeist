@@ -1,4 +1,4 @@
-"""Command-line interface and end-to-end self-check for Siftpress."""
+"""Command-line interface and end-to-end self-check for Filtergeist."""
 from __future__ import annotations
 
 import argparse
@@ -387,7 +387,7 @@ def cmd_selfcheck(_args: argparse.Namespace) -> int:
 
 
 def build_parser() -> argparse.ArgumentParser:
-    ap = argparse.ArgumentParser(description="Siftpress — editorial curation CLI & Studio")
+    ap = argparse.ArgumentParser(description="Filtergeist — editorial curation CLI & Studio")
     ap.add_argument("--stream", default=DEFAULT_STREAM, help="Stream slug in streams/<slug>.json or path to JSON")
     sub = ap.add_subparsers(dest="cmd", required=True)
 
@@ -452,7 +452,7 @@ def build_parser() -> argparse.ArgumentParser:
     p_wif.add_argument("--out-dir", default=None)
     p_wif.set_defaults(func=cmd_what_if)
 
-    p_stu = sub.add_parser("studio", help="Launch the local Siftpress Studio web GUI")
+    p_stu = sub.add_parser("studio", help="Launch the local Filtergeist Studio web GUI")
     p_stu.add_argument("--host", default="127.0.0.1")
     p_stu.add_argument("--port", type=int, default=8765)
     p_stu.set_defaults(func=cmd_studio)

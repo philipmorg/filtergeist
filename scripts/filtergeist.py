@@ -3,7 +3,7 @@
 # requires-python = ">=3.9"
 # dependencies = []
 # ///
-"""Executable entrypoint for Siftpress CLI and local Studio web GUI."""
+"""Executable entrypoint for Filtergeist CLI and local Studio web GUI."""
 from __future__ import annotations
 
 import sys
@@ -11,7 +11,7 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 
-from siftpress.cli import main
+from filtergeist.cli import main
 
 if __name__ == "__main__":
     raise SystemExit(main())

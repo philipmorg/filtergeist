@@ -1,4 +1,4 @@
-"""Siftpress core package: multi-source discovery, editorial scoring, and guide rendering."""
+"""Filtergeist core package: multi-source discovery, editorial scoring, and guide rendering."""
 from __future__ import annotations
 
 import html as htmlmod

@@ -45,7 +45,7 @@ For each candidate advancing past quick relevance triage (and past its native le
 
 ## 2. Deterministic Scoring & Filtering Pipeline
 
-`siftpress/scoring.py` computes each non-rejected candidate's `final_score` transparently and records `score_breakdown`:
+`filtergeist/scoring.py` computes each non-rejected candidate's `final_score` transparently and records `score_breakdown`:
 
 1. **Weighted Axis Base (`0–10`):** weighted sum of `scoring.axes_weights` (default `0.45*audience_fit + 0.30*operator_utility + 0.20*reframe_sharp_thesis + 0.05*evidence_anchoring`) scaled to `0–10`.
 2. **Recency Decay:** `0.5 ** (age_days / recency_half_life_days)` (`+0.0` to `+1.0`).

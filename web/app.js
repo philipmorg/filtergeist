@@ -290,7 +290,7 @@ claude mcp add --transport http exa "${exaUrl}&login"${apifyNote}
 codex mcp add exa --url "${exaUrl}"
 
 # Curate this stream from your coding agent:
-"Use the siftpress skill to curate stream '${esc(c.slug)}' in ${esc(c.defaults.default_exa_mode || "deep")} mode."</pre>
+"Use the filtergeist skill to curate stream '${esc(c.slug)}' in ${esc(c.defaults.default_exa_mode || "deep")} mode."</pre>
     </div>
   `;
 
@@ -524,7 +524,7 @@ function renderApifyTab(el) {
       <div class="card-header">
         <div>
           <h2>Optional Apify Social, Video &amp; Web Discovery</h2>
-          <p class="help">Completely opt-in. When unchecked (or when <code>--noapify</code> / <code>SIFTPRESS_NOAPIFY=1</code> is set), zero Apify calls occur.</p>
+          <p class="help">Completely opt-in. When unchecked (or when <code>--noapify</code> / <code>FILTERGEIST_NOAPIFY=1</code> is set), zero Apify calls occur.</p>
         </div>
         <span class="status-pill ${tokOk ? "status-clean" : "status-dirty"}">
           ${tokOk ? "APIFY_TOKEN detected in env" : "APIFY_TOKEN not set (MCP plan mode works)"}

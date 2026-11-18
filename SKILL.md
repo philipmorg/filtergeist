@@ -1,11 +1,11 @@
 ---
-name: siftpress
-description: Curate ranked editorial research guides and feeds (Markdown, Text RSS XML, Podcast RSS XML, Audit Review Markdown, and JSON) from curated RSS/podcast feeds, Exa MCP search and Exa Agent lenses, and optional Apify social/video actors, configured via JSON or the local Siftpress Studio web app.
+name: filtergeist
+description: Curate ranked editorial research guides and feeds (Markdown, Text RSS XML, Podcast RSS XML, Audit Review Markdown, and JSON) from curated RSS/podcast feeds, Exa MCP search and Exa Agent lenses, and optional Apify social/video actors, configured via JSON or the local Filtergeist Studio web app.
 ---
 
-# Siftpress — Editorial Curation Skill
+# Filtergeist — Editorial Curation Skill
 
-Siftpress turns noisy RSS feeds, open-web searches, podcast transcripts, and optional social/video streams into ranked, source-verified research guides and RSS feeds.
+Filtergeist turns noisy RSS feeds, open-web searches, podcast transcripts, and optional social/video streams into ranked, source-verified research guides and RSS feeds.
 
 ## What This Does, In Plain Language
 
@@ -38,7 +38,7 @@ Nothing is emailed or auto-published to subscribers. Every run produces clean lo
 ## Files in This Repository
 
 - `streams/<slug>.json` — Stream configuration (starter example: `streams/systems-and-craft.json`).
-- `scripts/siftpress.py` — Zero-dependency Python 3.9+ CLI (`python3` or `uv run`) for feed polling, optional Apify execution, Exa plan generation, pooling, quote-verified rendering, `what-if` simulation, and launching **Siftpress Studio**.
+- `scripts/filtergeist.py` — Zero-dependency Python 3.9+ CLI (`python3` or `uv run`) for feed polling, optional Apify execution, Exa plan generation, pooling, quote-verified rendering, `what-if` simulation, and launching **Filtergeist Studio**.
 - `references/mcp-setup.md` — One-line Exa MCP and optional Apify setup for Claude Code, Codex, and Cursor, plus verified tool parameter rules.
 - `references/schema-and-rubric.md` — Complete `spine` JSON schema, scoring equations, publisher down-weighting, hype-topic suppressors, and output format specs.
 
@@ -46,13 +46,13 @@ Nothing is emailed or auto-published to subscribers. Every run produces clean lo
 
 ## Run Parameters & Modes
 
-Every parameter has a working default in `streams/<slug>.json` (editable visually via `python3 scripts/siftpress.py studio`).
+Every parameter has a working default in `streams/<slug>.json` (editable visually via `python3 scripts/filtergeist.py studio`).
 
 1. **`stream` — which publication config to run** (default `systems-and-craft`). Pass `--stream <slug>` on every CLI command.
 2. **`mode` — how much Exa discovery firepower to use** (`deep` | `standard`):
    - **`deep`** (default when `agent_run` is available): runs the stream's Exa Agent researcher lenses (`fact`, `pov`, `howto` at ~$0.025/lens on `low` effort) plus complementary `web_search_advanced_exa` category and podcast-transcript searches.
    - **`standard`** (fast sweep, or when `agent_run` is unavailable): uses regular Exa searches across all categories, the high-signal domain allowlist, and podcast transcripts.
-3. **`apify` — optional social & video scraping** (`enabled: false` by default): when enabled in `streams/<slug>.json` (and neither `--noapify` nor `SIFTPRESS_NOAPIFY=1` is set), polls configured LinkedIn, X/Twitter, YouTube, or JS-web sources up to `apify.max_usd_per_run`.
+3. **`apify` — optional social & video scraping** (`enabled: false` by default): when enabled in `streams/<slug>.json` (and neither `--noapify` nor `FILTERGEIST_NOAPIFY=1` is set), polls configured LinkedIn, X/Twitter, YouTube, or JS-web sources up to `apify.max_usd_per_run`.
 4. **`cycle` — which issue build you are adding to** (`YYYY-MM-DD`, optional): omit to continue `out/<stream>/CURRENT_BUILD` (or start today's UTC date); pass a new date to start a fresh issue.
 5. **`lookback_days` — how far back to search** (default `14`; editor-owned feeds use `owned_source_lookback_days`, default `90`).
 6. **`max_spines` — how many candidates receive a full LLM review (`spine`) per run** (default `40`). Overflow candidates are still logged when `review_markdown` is enabled.
@@ -67,12 +67,12 @@ Every parameter has a working default in `streams/<slug>.json` (editable visuall
 
 ## End-to-End Curation Workflow
 
-Set `WORKDIR="$(mktemp -d /tmp/siftpress.XXXXXX)"`, `<REPO>` to this folder, and `<STREAM>` to the target stream slug.
+Set `WORKDIR="$(mktemp -d /tmp/filtergeist.XXXXXX)"`, `<REPO>` to this folder, and `<STREAM>` to the target stream slug.
 
 ### Step 1 — Poll Curated Feeds (and Optional Apify Sources)
 
 ```bash
-python3 "<REPO>/scripts/siftpress.py" --stream "<STREAM>" poll-feeds \
+python3 "<REPO>/scripts/filtergeist.py" --stream "<STREAM>" poll-feeds \
   --out "$WORKDIR/rss_raw.json"
 ```
 
@@ -83,7 +83,7 @@ python3 "<REPO>/scripts/siftpress.py" --stream "<STREAM>" poll-feeds \
 ### Step 2 — Run Exa MCP Discovery (`deep` or `standard`)
 
 ```bash
-python3 "<REPO>/scripts/siftpress.py" --stream "<STREAM>" search-plan \
+python3 "<REPO>/scripts/filtergeist.py" --stream "<STREAM>" search-plan \
   --mode deep > "$WORKDIR/search_plan.json"
 ```
 
@@ -97,7 +97,7 @@ Save all Exa results to `$WORKDIR/exa_raw.json`, preserving `lane`, `content_len
 ### Step 3 — Merge, Deduplicate, Fetch Missing Text, and Screen Out Junk
 
 ```bash
-python3 "<REPO>/scripts/siftpress.py" --stream "<STREAM>" prepare-pool \
+python3 "<REPO>/scripts/filtergeist.py" --stream "<STREAM>" prepare-pool \
   --rss "$WORKDIR/rss_raw.json" \
   --exa "$WORKDIR/exa_raw.json" \
   --pool-out "$WORKDIR/pool.json"
@@ -120,7 +120,7 @@ Write the list of evaluation objects to `$WORKDIR/evaluated.json`.
 ### Step 5 — Verify Quotes, Score, and Render Configured Outputs
 
 ```bash
-python3 "<REPO>/scripts/siftpress.py" --stream "<STREAM>" render-guide \
+python3 "<REPO>/scripts/filtergeist.py" --stream "<STREAM>" render-guide \
   --pool "$WORKDIR/pool.json" \
   --evaluated "$WORKDIR/evaluated.json" \
   --model "<active-agent-model>"
@@ -130,10 +130,10 @@ python3 "<REPO>/scripts/siftpress.py" --stream "<STREAM>" render-guide \
 
 ---
 
-## Configuring Visually with Siftpress Studio
+## Configuring Visually with Filtergeist Studio
 
 Launch the local web GUI anytime to configure streams, test RSS feeds live, toggle output formats (`Markdown`, `Text XML`, `Podcast XML`, `Review Markdown`, `JSON`), manage Apify sources, and run instant `what-if` scoring simulations:
 
 ```bash
-python3 "<REPO>/scripts/siftpress.py" studio --port 8765
+python3 "<REPO>/scripts/filtergeist.py" studio --port 8765
 ```

@@ -3,7 +3,7 @@
   "newsletter": "Systems & Craft Weekly",
   "owner": "Example Editor",
   "owner_site": "https://example.org",
-  "description": "Example starter stream for Siftpress: practical software engineering, distributed systems, debugging craft, and team delivery.",
+  "description": "Example starter stream for Filtergeist: practical software engineering, distributed systems, debugging craft, and team delivery.",
   "defaults": {
     "lookback_days": 14,
     "owned_source_lookback_days": 90,
@@ -31,7 +31,7 @@
       "title": "Systems & Craft Weekly — Research Feed",
       "podcast_title": "Systems & Craft Weekly — Listen Queue",
       "link": "https://example.org",
-      "description": "Curated engineering articles, empirical studies, and audio episodes surfaced by Siftpress.",
+      "description": "Curated engineering articles, empirical studies, and audio episodes surfaced by Filtergeist.",
       "author": "Example Editor",
       "language": "en-us",
       "resolve_enclosures": true

@@ -1,4 +1,4 @@
-"""Local HTTP server for Siftpress Studio GUI (bound to 127.0.0.1 by default)."""
+"""Local HTTP server for Filtergeist Studio GUI (bound to 127.0.0.1 by default)."""
 from __future__ import annotations
 
 import json
@@ -256,7 +256,7 @@ def make_handler(streams_dir: Path = STREAMS_DIR, base_out: Path | None = None, 
                         "default_stream": DEFAULT_STREAM,
                         "apify_token_present": bool(os.environ.get("APIFY_TOKEN", "").strip()),
                         "exa_api_key_present": bool(os.environ.get("EXA_API_KEY", "").strip()),
-                        "noapify_env": os.environ.get("SIFTPRESS_NOAPIFY", "") == "1" or os.environ.get("NOAPIFY", "") == "1",
+                        "noapify_env": os.environ.get("FILTERGEIST_NOAPIFY", "") == "1" or os.environ.get("NOAPIFY", "") == "1",
                         "default_actors": DEFAULT_APIFY_ACTORS,
                     })
                     return
@@ -411,7 +411,7 @@ def run_studio(host: str = "127.0.0.1", port: int = 8765, streams_dir: Path = ST
     handler = make_handler(streams_dir=streams_dir, base_out=base_out)
     server = ThreadingHTTPServer((host, port), handler)
     actual_host, actual_port = server.server_address[:2]
-    print(f"Siftpress Studio listening on http://{actual_host}:{actual_port}", flush=True)
+    print(f"Filtergeist Studio listening on http://{actual_host}:{actual_port}", flush=True)
     try:
         server.serve_forever()
     except KeyboardInterrupt:
