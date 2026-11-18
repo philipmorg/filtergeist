@@ -1,0 +1,486 @@
+{
+  "slug": "systems-and-craft",
+  "newsletter": "Systems & Craft Weekly",
+  "owner": "Example Editor",
+  "owner_site": "https://example.org",
+  "description": "Example starter stream for Siftpress: practical software engineering, distributed systems, debugging craft, and team delivery.",
+  "defaults": {
+    "lookback_days": 14,
+    "owned_source_lookback_days": 90,
+    "max_fetch": 120,
+    "max_spines": 40,
+    "min_words_article": 300,
+    "min_words_podcast": 100,
+    "min_words_shortform": 35,
+    "max_text_chars_article": 12000,
+    "max_text_chars_podcast": 100000,
+    "recency_half_life_days": 10,
+    "default_exa_mode": "deep",
+    "default_exa_effort": "low",
+    "exploration_probe_rate": 0.1
+  },
+  "outputs": {
+    "formats": {
+      "markdown": true,
+      "review_markdown": true,
+      "text_xml": true,
+      "podcast_xml": true,
+      "json": true
+    },
+    "feed_metadata": {
+      "title": "Systems & Craft Weekly — Research Feed",
+      "podcast_title": "Systems & Craft Weekly — Listen Queue",
+      "link": "https://example.org",
+      "description": "Curated engineering articles, empirical studies, and audio episodes surfaced by Siftpress.",
+      "author": "Example Editor",
+      "language": "en-us",
+      "resolve_enclosures": true
+    }
+  },
+  "selection": {
+    "mode": "running_guide",
+    "total_items": 10,
+    "max_per_domain": 2,
+    "max_per_author": 2,
+    "require_author": false,
+    "min_final_score": 6,
+    "backfill_relax_delta": 0.8
+  },
+  "scoring": {
+    "axes_weights": {
+      "audience_fit": 0.45,
+      "operator_utility": 0.3,
+      "reframe_sharp_thesis": 0.2,
+      "evidence_anchoring": 0.05,
+      "voice_risk": 0
+    },
+    "slop_penalties": {
+      "clean": 0,
+      "borderline": 0.8,
+      "slop": 2
+    },
+    "trusted_source_min_audience_fit": 3,
+    "trusted_source_max_boost": 0.5,
+    "diversity": {
+      "enabled": true,
+      "new_domain_bonus": 0.25,
+      "last_cycle_domain_penalty": 0.35,
+      "last_cycle_author_penalty": 0.35,
+      "similarity_threshold": 0.45,
+      "similarity_penalty": 1
+    }
+  },
+  "audience": {
+    "profile": "Staff+ software engineers, tech leads, and engineering managers who build and operate production systems. They value concrete architecture postmortems, debugging stories, empirical performance measurements, clear trade-offs, and honest operational lessons.",
+    "core_thesis": "Durable engineering speed comes from simple systems, inspectable state, fast feedback loops, and clear operational ownership rather than hype-driven complexity.",
+    "pillars": [
+      "Boring, inspectable architecture beats speculative abstraction.",
+      "Postmortems and real production numbers teach more than manifestos.",
+      "Debugging, observability, and testing are core design disciplines.",
+      "Tooling only helps when the surrounding team workflow and review gates keep pace."
+    ],
+    "positive_signals": [
+      "First-hand debugging stories, incident postmortems, and architecture teardowns with concrete trade-offs",
+      "Reproducible benchmarks with disclosed hardware, workload shapes, and caveats",
+      "Practical tools, workflows, or design patterns an engineering team can apply this week",
+      "Honest failure modes and conditions where an approach stops working"
+    ],
+    "reject_signals": [
+      "Press releases, product launch announcements, and vendor content marketing disguised as tutorials",
+      "SEO listicles ('Top 10 Tools', 'Ultimate Guide'), generic career platitudes, and engagement bait",
+      "Unverified benchmark claims with no methodology or workload disclosure",
+      "Partisan politics, celebrity gossip, job listings, and gated stub pages"
+    ],
+    "triage_min_relevance": 3
+  },
+  "categories": {
+    "architecture": {
+      "label": "Systems & Architecture",
+      "min": 2,
+      "max": 4,
+      "exa_mcp_category": null,
+      "query": "distributed systems architecture postmortem database internals storage reliability simplicity trade-offs",
+      "additional_queries": [
+        "what we learned scaling production architecture postmortem",
+        "why we replaced complex microservices with simpler architecture"
+      ],
+      "include_text_single": [],
+      "exclude_text": [
+        "top 10",
+        "press release",
+        "sponsored"
+      ]
+    },
+    "craft": {
+      "label": "Debugging & Engineering Craft",
+      "min": 2,
+      "max": 4,
+      "exa_mcp_category": "personal site",
+      "query": "debugging postmortem compiler systems programming performance profiling observability lessons learned",
+      "additional_queries": [
+        "tracking down a subtle production bug systems debugging",
+        "software engineering craft code review testing deterministic simulation"
+      ],
+      "include_text_single": [],
+      "exclude_text": [
+        "ultimate guide",
+        "sponsored",
+        "bootcamp"
+      ]
+    },
+    "playbooks": {
+      "label": "Team & Delivery Playbooks",
+      "min": 1,
+      "max": 3,
+      "exa_mcp_category": null,
+      "query": "engineering team workflow code review bottlenecks incident response on-call playbook migration strategy",
+      "additional_queries": [
+        "running zero-downtime migrations engineering playbook",
+        "reducing code review latency and improving developer feedback loops"
+      ],
+      "include_text_single": [],
+      "exclude_text": [
+        "top 10",
+        "book a demo",
+        "we're hiring"
+      ]
+    },
+    "research": {
+      "label": "Benchmarks & Empirical Research",
+      "min": 1,
+      "max": 3,
+      "exa_mcp_category": "research paper",
+      "query": "empirical study software engineering systems performance benchmark methodology dataset production study",
+      "additional_queries": [
+        "empirical study code review software defects developer productivity",
+        "systems benchmark latency throughput evaluation methodology"
+      ],
+      "include_text_single": [],
+      "exclude_text": [
+        "press release",
+        "sponsored"
+      ]
+    }
+  },
+  "agent_lenses": [
+    {
+      "key": "fact",
+      "enabled": true,
+      "category_hint": "research",
+      "effort": "low",
+      "max_items": 8,
+      "min_gate_score_10": 7.5,
+      "gate_rubric": "Require inspectable empirical data, reproducible benchmarks, or concrete first-hand incident/production metrics with disclosed limitations and proportional conclusions.",
+      "prompt": "You are a selective research editor for Systems & Craft Weekly, a research guide for senior software engineers and engineering leaders. Search work published in the last <LOOKBACK_DAYS> days (never older than 30 days).\n\nOpen and inspect the actual page before returning it. Reject snippets, gated landing pages, press releases, vendor marketing, SEO listicles, and unverified hype. Return fewer results, including zero, when candidates miss the bar. Never invent URLs or facts.\n\nFACT / EVIDENCE LENS. Find at most 8 works grounded in accountable evidence: empirical software engineering studies, reproducible systems benchmarks, or detailed production postmortems with concrete numbers, trade-offs, and disclosed caveats."
+    },
+    {
+      "key": "pov",
+      "enabled": true,
+      "category_hint": "architecture",
+      "effort": "low",
+      "max_items": 8,
+      "min_gate_score_10": 7.5,
+      "gate_rubric": "Require a clear argument challenging a common engineering assumption, backed by coherent systems reasoning, earned practitioner experience, and honest trade-offs.",
+      "prompt": "You are a selective editorial scout for Systems & Craft Weekly, read by staff+ engineers and tech leads. Search work published in the last <LOOKBACK_DAYS> days (never older than 30 days).\n\nOpen and inspect the actual page before returning it. Reject hot takes without reasoning, vendor pitches, SEO explainers, and generic career advice. Return fewer results rather than padding.\n\nPOV LENS. Find at most 8 substantial practitioner essays that challenge a widespread software architecture or engineering-management assumption, explain the underlying mechanism, confront real trade-offs, and change how a team designs or operates systems this week."
+    },
+    {
+      "key": "howto",
+      "enabled": true,
+      "category_hint": "playbooks",
+      "effort": "low",
+      "max_items": 8,
+      "min_gate_score_10": 7.5,
+      "gate_rubric": "Require a concrete engineering practice with step-by-step judgment, real code or operational artifacts, failure modes, and boundary conditions.",
+      "prompt": "You are a selective practice editor for Systems & Craft Weekly. Search work published in the last <LOOKBACK_DAYS> days (never older than 30 days).\n\nOpen and inspect the actual page before returning it. Reject beginner boilerplate, shallow numbered tips, and vendor product walkthroughs. Return fewer results rather than padding.\n\nHOW-TO / PLAYBOOK LENS. Find at most 8 detailed practitioner guides teaching a consequential engineering practice: debugging hard production issues, running safe schema/infrastructure migrations, deterministic testing, or tightening review and observability loops. Require concrete examples, situational judgment, and explicit failure modes."
+    }
+  ],
+  "podcast_discovery": {
+    "enabled": true,
+    "results_per_query": 4,
+    "include_domains": [
+      "exa.ai/library/podcast"
+    ],
+    "queries": [
+      "podcast episode distributed systems architecture postmortem database internals production lessons",
+      "podcast episode software engineering craft debugging observability developer productivity bottlenecks"
+    ]
+  },
+  "content_sources": [
+    {
+      "name": "Simon Willison",
+      "url": "https://simonwillison.net/atom/everything/",
+      "platform": "rss",
+      "domain": "simonwillison.net",
+      "enabled": true,
+      "max_entries": 10
+    },
+    {
+      "name": "Martin Fowler",
+      "url": "https://martinfowler.com/feed.atom",
+      "platform": "rss",
+      "domain": "martinfowler.com",
+      "enabled": true,
+      "max_entries": 10
+    },
+    {
+      "name": "Julia Evans",
+      "url": "https://jvns.ca/atom.xml",
+      "platform": "rss",
+      "domain": "jvns.ca",
+      "enabled": true,
+      "max_entries": 10
+    },
+    {
+      "name": "Mitchell Hashimoto",
+      "url": "https://mitchellh.com/feed.xml",
+      "platform": "rss",
+      "domain": "mitchellh.com",
+      "enabled": true,
+      "max_entries": 10
+    },
+    {
+      "name": "Eli Bendersky",
+      "url": "https://eli.thegreenplace.net/feeds/all.atom.xml",
+      "platform": "rss",
+      "domain": "eli.thegreenplace.net",
+      "enabled": true,
+      "max_entries": 10
+    },
+    {
+      "name": "Thorsten Ball — Register Spill",
+      "url": "https://registerspill.thorstenball.com/feed",
+      "platform": "rss",
+      "domain": "registerspill.thorstenball.com",
+      "enabled": true,
+      "max_entries": 10
+    },
+    {
+      "name": "Charity Majors",
+      "url": "https://charity.wtf/feed",
+      "platform": "rss",
+      "domain": "charity.wtf",
+      "enabled": true,
+      "max_entries": 10
+    },
+    {
+      "name": "The Changelog Podcast",
+      "url": "https://changelog.com/podcast/feed",
+      "platform": "podcast",
+      "domain": "changelog.com",
+      "enabled": true,
+      "max_entries": 8
+    }
+  ],
+  "apify": {
+    "enabled": false,
+    "max_usd_per_run": 1.5,
+    "timeout_s": 180,
+    "actors": {
+      "linkedin_profiles": "apimaestro~linkedin-batch-profile-posts-scraper",
+      "linkedin_search": "apimaestro~linkedin-posts-search-scraper-no-cookies",
+      "x_profiles": "apidojo~twitter-scraper-lite",
+      "x_lists": "apidojo~twitter-list-scraper",
+      "youtube_channel": "streamers~youtube-scraper",
+      "youtube_transcript": "starvibe/youtube-video-transcript",
+      "web_crawler": "apify/website-content-crawler"
+    },
+    "sources": [
+      {
+        "name": "Example X Handle (@mitchellh)",
+        "kind": "x_profiles",
+        "target": "mitchellh",
+        "max_items": 10,
+        "enabled": false,
+        "category_hint": "craft"
+      },
+      {
+        "name": "Example YouTube Channel (Systems Conf)",
+        "kind": "youtube_channel",
+        "target": "https://www.youtube.com/@StrangeLoopConf",
+        "fetch_transcripts": true,
+        "max_items": 5,
+        "enabled": false,
+        "category_hint": "architecture"
+      },
+      {
+        "name": "Example LinkedIn Topic Search",
+        "kind": "linkedin_search",
+        "target": "\"incident postmortem\" distributed systems",
+        "max_items": 10,
+        "enabled": false,
+        "category_hint": "playbooks"
+      }
+    ]
+  },
+  "query_site_allowlist": [
+    "martinfowler.com",
+    "jvns.ca",
+    "mitchellh.com",
+    "eli.thegreenplace.net",
+    "charity.wtf",
+    "danluu.com",
+    "fly.io",
+    "brooker.co.za"
+  ],
+  "trusted_sources": [
+    {
+      "host": "jvns.ca",
+      "label": "Julia Evans",
+      "boost": 0.35
+    },
+    {
+      "host": "mitchellh.com",
+      "label": "Mitchell Hashimoto",
+      "boost": 0.35
+    },
+    {
+      "host": "martinfowler.com",
+      "label": "Martin Fowler",
+      "boost": 0.25
+    },
+    {
+      "host": "eli.thegreenplace.net",
+      "label": "Eli Bendersky",
+      "boost": 0.25
+    }
+  ],
+  "exemplars": {
+    "urls": [
+      "https://jvns.ca/blog/2023/10/06/new-talk--making-hard-things-easy/",
+      "https://martinfowler.com/articles/patterns-of-distributed-systems/"
+    ],
+    "taste_anchors": [
+      {
+        "title": "Concrete mental models over hand-waving",
+        "categories": [
+          "craft",
+          "architecture"
+        ],
+        "thesis": "The strongest technical writing names the exact mechanism under the hood and shows a small, inspectable reproduction."
+      }
+    ]
+  },
+  "focus_topics": [
+    {
+      "key": "debugging_and_observability",
+      "label": "Debugging & Observability",
+      "enabled": true,
+      "terms": [
+        "postmortem",
+        "root cause",
+        "flamegraph",
+        "profiling",
+        "tracing",
+        "observability",
+        "deterministic simulation"
+      ],
+      "topic_tags": [
+        "debugging",
+        "observability",
+        "postmortem",
+        "testing"
+      ],
+      "focus_threshold": 0.35,
+      "boost": 0.5
+    },
+    {
+      "key": "simplicity_and_migrations",
+      "label": "Simplicity & Safe Migrations",
+      "enabled": true,
+      "terms": [
+        "zero-downtime",
+        "schema migration",
+        "sqlite",
+        "postgres",
+        "monolith",
+        "data contract",
+        "backpressure"
+      ],
+      "topic_tags": [
+        "architecture",
+        "migrations",
+        "databases"
+      ],
+      "focus_threshold": 0.35,
+      "boost": 0.45
+    }
+  ],
+  "hype_topics": [
+    {
+      "key": "generic_ai_hype",
+      "label": "Generic AI Hype & Benchmark Churn",
+      "enabled": true,
+      "terms": [
+        "agi",
+        "10x engineer overnight",
+        "replace all developers",
+        "prompt hack",
+        "leaderboard"
+      ],
+      "topic_tags": [
+        "ai_hype",
+        "prompt_tips"
+      ],
+      "focus_threshold": 0.5,
+      "penalty": 1,
+      "waive_banger_score_10": 8.8,
+      "fade_width": 0.8,
+      "min_banger_score_10": 7.8,
+      "max_selected": 2
+    }
+  ],
+  "publisher_penalties": {
+    "enabled": true,
+    "saas": 0.8,
+    "agency": 0.6,
+    "general": 0,
+    "waive_banger_score_10": 9,
+    "fade_width": 0.8,
+    "full_at_signals": 6,
+    "exempt_domains": [
+      "fly.io"
+    ],
+    "min_banger_score_10": {
+      "saas": 8.6,
+      "agency": 8.5,
+      "general": 0
+    },
+    "kind_overrides": {}
+  },
+  "must_include": [],
+  "focus_anchors": [
+    "postmortem",
+    "distributed systems",
+    "debugging",
+    "observability",
+    "latency",
+    "throughput",
+    "benchmark",
+    "sqlite",
+    "postgres",
+    "migration",
+    "testing",
+    "code review"
+  ],
+  "deny_domains": [
+    "buzzfeed.com",
+    "weebly.com",
+    "ezinearticles.com",
+    "vocal.media",
+    "medium.com/@",
+    "facebook.com",
+    "instagram.com",
+    "tiktok.com"
+  ],
+  "topic_deny_terms": [
+    "celebrity",
+    "horoscope",
+    "casino",
+    "sweepstakes"
+  ],
+  "prefilter_reject_regex": "\\b(job board|we're hiring|apply now|sponsored post)\\b",
+  "howto_episode_domains": [
+    "exa.ai",
+    "changelog.com"
+  ]
+}

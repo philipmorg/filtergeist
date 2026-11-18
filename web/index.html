@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Siftpress Studio — Editorial Curation Configurator</title>
+  <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand">
+      <span class="brand-mark" aria-hidden="true">◆</span>
+      <div>
+        <h1>Siftpress Studio</h1>
+        <p class="subtitle">Multi-source editorial curation · RSS · Exa · Optional Apify</p>
+      </div>
+    </div>
+    <div class="topbar-controls">
+      <label class="visually-hidden" for="stream-select">Active stream</label>
+      <select id="stream-select" aria-label="Active stream"></select>
+      <button type="button" id="btn-new-stream" class="btn btn-secondary">+ New Stream</button>
+      <span id="dirty-indicator" class="status-pill status-clean">Saved</span>
+      <button type="button" id="btn-raw-json" class="btn btn-ghost">JSON</button>
+      <button type="button" id="btn-save" class="btn btn-primary">Save Config</button>
+    </div>
+  </header>
+
+  <div class="workspace">
+    <nav class="sidebar" aria-label="Configuration sections">
+      <button type="button" class="nav-item active" data-tab="overview">
+        <span class="nav-num">1</span> Overview &amp; Outputs
+      </button>
+      <button type="button" class="nav-item" data-tab="sources">
+        <span class="nav-num">2</span> RSS &amp; Web Sources
+      </button>
+      <button type="button" class="nav-item" data-tab="apify">
+        <span class="nav-num">3</span> Apify Social &amp; Video
+      </button>
+      <button type="button" class="nav-item" data-tab="rubric">
+        <span class="nav-num">4</span> Editorial Rubric
+      </button>
+      <button type="button" class="nav-item" data-tab="lenses">
+        <span class="nav-num">5</span> Categories &amp; Exa Lenses
+      </button>
+      <button type="button" class="nav-item" data-tab="scoring">
+        <span class="nav-num">6</span> Scoring, Hype &amp; Vendors
+      </button>
+      <button type="button" class="nav-item" data-tab="simulator">
+        <span class="nav-num">7</span> Pins &amp; What-If Lab
+      </button>
+      <button type="button" class="nav-item" data-tab="outputs">
+        <span class="nav-num">8</span> Rendered Outputs
+      </button>
+    </nav>
+
+    <main id="main-panel" class="main-panel" tabindex="-1">
+      <section id="panel-content" aria-live="polite"></section>
+    </main>
+  </div>
+
+  <!-- New Stream Modal -->
+  <dialog id="modal-new-stream" class="modal">
+    <form id="form-new-stream" method="dialog">
+      <h2>Create New Curation Stream</h2>
+      <p class="help">Creates a new <code>streams/&lt;slug&gt;.json</code> cloned from your current starter template.</p>
+      <div class="field-grid">
+        <label>Stream Slug (lowercase, hyphens)
+          <input type="text" id="new-slug" required pattern="[a-z0-9][a-z0-9_-]{0,63}" placeholder="e.g. cloud-security-brief">
+        </label>
+        <label>Publication Title
+          <input type="text" id="new-newsletter" required placeholder="e.g. Cloud Security Brief">
+        </label>
+        <label>Editor / Owner Name
+          <input type="text" id="new-owner" placeholder="e.g. Alex Rivera">
+        </label>
+        <label>Website URL
+          <input type="url" id="new-site" placeholder="https://example.org">
+        </label>
+      </div>
+      <label>Short Description
+        <input type="text" id="new-desc" placeholder="Weekly curation of cloud security research and incident postmortems.">
+      </label>
+      <div class="modal-actions">
+        <button type="button" id="btn-cancel-new" class="btn btn-secondary">Cancel</button>
+        <button type="submit" class="btn btn-primary">Create Stream</button>
+      </div>
+    </form>
+  </dialog>
+
+  <!-- Raw JSON Inspector Modal -->
+  <dialog id="modal-json" class="modal modal-wide">
+    <div class="modal-head">
+      <h2>Stream Configuration JSON</h2>
+      <button type="button" id="btn-close-json" class="btn btn-secondary">Close</button>
+    </div>
+    <p class="help">Edit raw JSON directly if desired, then click Apply JSON.</p>
+    <textarea id="raw-json-editor" rows="22" spellcheck="false"></textarea>
+    <div class="modal-actions">
+      <button type="button" id="btn-apply-json" class="btn btn-primary">Apply JSON</button>
+    </div>
+  </dialog>
+
+  <div id="toast" class="toast" role="status" aria-live="polite" hidden></div>
+  <script src="/app.js"></script>
+</body>
+</html>
